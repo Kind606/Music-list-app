@@ -10,7 +10,7 @@ searchInput.addEventListener("input", (event) => {
     const sections = musicList.querySelectorAll("section.card");
     
     sections.forEach((section) => {
-        const title = section.querySelector("p").innerText.toLowerCase();
+        const title = section.querySelector("p" , ).innerText.toLowerCase();
         if (title.includes(searchValue)) {
         section.style.display = "block";
         } else {
@@ -53,6 +53,12 @@ const loadMusic = async () => {
 
     const info = document.createElement("p");
     info.innerText = song.artist;
+    info.classList.add("artist-name");
+
+    const gerne = document.createElement("span");
+    gerne.innerText = song.genre;
+    gerne.classList.add("genre-name");
+    
 
     const favButton = document.createElement("button");
     favButton.innerText = isFavorite(song.id) ? "★" : "☆";
@@ -65,6 +71,7 @@ const loadMusic = async () => {
 
     section.appendChild(image);
     section.appendChild(info);
+    info.appendChild(gerne);
     section.appendChild(favButton);
 
     musicList.appendChild(section);
