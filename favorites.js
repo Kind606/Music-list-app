@@ -8,27 +8,21 @@ const getFavorites = () => {
   return JSON.parse(localStorage.getItem(FAVORITES_KEY)) || [];
 };
 
-const toggleFavorite = (songId) => {
+const removeFavorite = (songId) => {
   let favorites = getFavorites();
-
-  if (favorites.includes(songId)) {
-    favorites = favorites.filter((id) => id !== songId);
-  } else {
-    favorites.push(songId);
-  }
-
+  favorites = favorites.filter((id) => id !== songId);
   localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
 };
 
-const isFavorite = (songId) => {
-  return getFavorites().includes(songId);
-};
-
-const loadMusic = async () => {
+const loadFavorites = async () => {
   const client = new http("songs");
   const songs = await client.get();
+  musicList.innerHTML = ""; // Clear the list before loading favorites
+  const favorites = getFavorites();
 
-  for (let song of songs) {
+  const favSongs = songs.filter((song) => favorites.includes(song.id));
+
+  for (let song of favSongs) {
     const section = document.createElement("section");
     section.classList.add("card");
 
@@ -39,21 +33,21 @@ const loadMusic = async () => {
     const info = document.createElement("p");
     info.innerText = song.artist;
 
-    const favButton = document.createElement("button");
-    favButton.innerText = isFavorite(song.id) ? "★ Favorite" : "☆ Add Favorite";
-    favButton.classList.add("fav-btn");
+    const removeBtn = document.createElement("button");
+    removeBtn.innerText = "Remove Favorite";
+    removeBtn.classList.add("remove-btn");
 
-    favButton.addEventListener("click", () => {
-      toggleFavorite(song.id);
-      favButton.innerText = isFavorite(song.id) ? "★ Favorite" : "☆ Add Favorite";
+    removeBtn.addEventListener("click", () => {
+      removeFavorite(song.id);
+      section.remove();
     });
 
     section.appendChild(image);
     section.appendChild(info);
-    section.appendChild(favButton);
+    section.appendChild(removeBtn);
 
     musicList.appendChild(section);
   }
 };
 
-document.addEventListener("DOMContentLoaded", loadMusic);
+document.addEventListener("DOMContentLoaded", loadFavorites);
