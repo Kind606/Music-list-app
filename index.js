@@ -52,13 +52,15 @@ const loadMusic = async () => {
     image.alt = song.title;
 
     const info = document.createElement("p");
-    info.innerText = song.artist;
+    info.innerText = song.title;
     info.classList.add("artist-name");
 
     const gerne = document.createElement("span");
     gerne.innerText = song.genre;
-    gerne.classList.add("genre-name");
     
+    const artist = document.createElement("span");
+    artist.innerText = song.artist;
+    artist.classList.add("artist-name");
 
     const favButton = document.createElement("button");
     favButton.innerText = isFavorite(song.id) ? "★" : "☆";
@@ -72,6 +74,7 @@ const loadMusic = async () => {
     section.appendChild(image);
     section.appendChild(info);
     info.appendChild(gerne);
+    info.appendChild(artist);
     section.appendChild(favButton);
 
     musicList.appendChild(section);

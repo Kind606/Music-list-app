@@ -31,7 +31,7 @@ const loadFavorites = async () => {
     image.alt = song.title;
 
     const info = document.createElement("p");
-    info.innerText = song.artist;
+    info.innerText = song.title;
 
     const gerne = document.createElement("span");
     gerne.innerText = song.genre;
