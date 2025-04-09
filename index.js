@@ -1,8 +1,23 @@
 import http from "./scripts/httpClient.js";
 
 const musicList = document.querySelector("#music");
+const searchInput = document.querySelector("[data-search]");
 
 const FAVORITES_KEY = "favoriteSongs";
+
+searchInput.addEventListener("input", (event) => {
+    const searchValue = event.target.value.toLowerCase();
+    const sections = musicList.querySelectorAll("section.card");
+    
+    sections.forEach((section) => {
+        const title = section.querySelector("p").innerText.toLowerCase();
+        if (title.includes(searchValue)) {
+        section.style.display = "block";
+        } else {
+        section.style.display = "none";
+        }
+    });
+    });
 
 const getFavorites = () => {
   return JSON.parse(localStorage.getItem(FAVORITES_KEY)) || [];
@@ -40,12 +55,12 @@ const loadMusic = async () => {
     info.innerText = song.artist;
 
     const favButton = document.createElement("button");
-    favButton.innerText = isFavorite(song.id) ? "★ Favorite" : "☆ Add Favorite";
+    favButton.innerText = isFavorite(song.id) ? "★" : "☆";
     favButton.classList.add("fav-btn");
 
     favButton.addEventListener("click", () => {
       toggleFavorite(song.id);
-      favButton.innerText = isFavorite(song.id) ? "★ Favorite" : "☆ Add Favorite";
+      favButton.innerText = isFavorite(song.id) ? "★" : "☆";
     });
 
     section.appendChild(image);
