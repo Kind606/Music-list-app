@@ -36,6 +36,10 @@ const loadFavorites = async () => {
     const gerne = document.createElement("span");
     gerne.innerText = song.genre;
     gerne.classList.add("genre-name");
+    
+    const artist = document.createElement("span");
+    artist.innerText = song.artist;
+    artist.classList.add("artist-name");
 
     const removeBtn = document.createElement("button");
     removeBtn.innerText = "Remove Favorite";
@@ -48,6 +52,7 @@ const loadFavorites = async () => {
 
     section.appendChild(image);
     section.appendChild(info);
+    info.appendChild(artist);
     info.appendChild(gerne);
     section.appendChild(removeBtn);
 
